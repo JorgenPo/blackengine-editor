@@ -25,29 +25,29 @@ class MainWindow : public QMainWindow, public black::AbstractApplication, public
     Ui::MainWindow *ui;
 
 public:
-    MainWindow(std::shared_ptr<RenderWindow> renderWindow);
-    ~MainWindow();
+    explicit MainWindow(std::shared_ptr<RenderWindow> renderWindow);
+    ~MainWindow() override;
 
     // InputSystemInterface interface
 public:
-    bool isKeyPressed(black::Key key);
-    bool isKeyPressed(int key);
-    bool isKeyReleased(black::Key key);
-    bool isKeyReleased(int key);
-    void setCursorMode(black::CursorMode mode);
-    void setMouseAccelerated(bool accelerated);
-    void addCursor(std::string name, const black::Image &image);
-    void setCursor(std::string name);
+    bool isKeyPressed(black::Key key) override;
+    bool isKeyPressed(int key) override;
+    bool isKeyReleased(black::Key key) override;
+    bool isKeyReleased(int key) override;
+    void setCursorMode(black::CursorMode mode) override;
+    void setMouseAccelerated(bool accelerated) override;
+    void addCursor(std::string name, const black::Image &image) override;
+    void setCursor(std::string name) override;
 
 
     // AbstractApplication interface
 protected:
-    void update(float dt);
-    void init();
+    void update(float dt) override;
+    void init() override;
 
 private:
-    void initializeResources();
-    void run();
+    void initializeResources() override;
+    void run() override;
 
 public slots:
     void onUpdateTime();

@@ -23,26 +23,26 @@ public:
 
     // QOpenGLWidget interface
 protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
+    void initializeGL() override;
+    void resizeGL(int w, int h) override;
+    void paintGL() override;
 
     // RenderTargetInterface interface
 public:
-    void updateRenderTarget();
-    void setRenderTargetCurrent();
-    float getRenderTargetWidth();
-    float getRenderTargetHeight();
-    float getRenderTargetAspectRatio();
+    void updateRenderTarget() override;
+    void setRenderTargetCurrent() override;
+    float getRenderTargetWidth() override;
+    float getRenderTargetHeight() override;
+    float getRenderTargetAspectRatio() override;
 
     // AbstractRenderWindow interface
 public:
-    void show();
-    void hide();
-    void close();
-    bool isShown();
-    void pollEvents();
-    bool shouldClose();
+    void show() override;
+    void hide() override;
+    void close() override;
+    bool isShown() override;
+    void pollEvents() override;
+    bool shouldClose() override;
 
 private:
     void initScene();

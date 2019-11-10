@@ -21,15 +21,15 @@ conan_basic_setup()
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(blackengine-editor
-  main.cpp
-  mainwindow.cpp
-  mainwindow.h
-  renderwindow.cpp
-  renderwindow.h
-  mainwindow.ui
-  glad/src/glad.c
+        src/main.cpp
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/renderwindow.cpp
+        src/renderwindow.h
+        src/mainwindow.ui
+        libs/glad/src/glad.c
 )
 
 target_link_directories(blackengine-editor PRIVATE ${BLACKENGINE_ROOT}/lib)
 target_link_libraries(blackengine-editor PRIVATE Qt5::Widgets BlackEngine ${CONAN_LIBS})
-target_include_directories(blackengine-editor PRIVATE ${BLACKENGINE_ROOT}/include ${CMAKE_SOURCE_DIR}/glad/include)
+target_include_directories(blackengine-editor PRIVATE ${BLACKENGINE_ROOT}/include ${CMAKE_SOURCE_DIR}/libs/glad/include)

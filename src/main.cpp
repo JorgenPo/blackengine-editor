@@ -16,12 +16,11 @@ public:
         mainWindow = std::make_shared<MainWindow>(renderWindow);
     }
 
-    ~Application() override {
-    }
+    ~Application() override = default;
 
     // SystemInterface interfaceQApplication
 public:
-    std::string getName() const override {
+    [[nodiscard]] std::string getName() const override {
         return "qt";
     }
 
