@@ -1,0 +1,47 @@
+#include "mainwindow.h"
+#include "renderwindow.h"
+
+#include <QApplication>
+#include <BlackEngine/SystemInterface.h>
+
+class Application : public black::SystemInterface, public QApplication {
+    std::shared_ptr<MainWindow> mainWindow;
+    std::shared_ptr<RenderWindow> renderWindow;
+
+public:
+    Application(int &argc, char *argv[]) :
+        QApplication(argc, argv),
+        renderWindow(std::make_shared<RenderWindow>(nullptr))
+    {
+        mainWindow = std::make_shared<MainWindow>(renderWindow);
+    }
+
+    ~Application() override {
+    }
+
+    // SystemInterface interfaceQApplication
+public:
+    std::string getName() const override {
+        return "qt";
+    }
+
+    SystemWindow createWindow(const black::WindowData &data) override {
+        return {renderWindow, mainWindow};
+    }
+
+    void start() {
+        mainWindow->start();
+        mainWindow->show();
+    }
+};
+
+int main(int argc, char *argv[])
+{
+    auto app = std::make_shared<Application>(argc, argv);
+
+    black::Engine::RegisterSystemInterface(app);
+
+    app->start();
+
+    return app->exec();
+}
