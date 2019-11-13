@@ -51,6 +51,7 @@ private:
 
 public slots:
   void onUpdateTime();
+  //void onLightIntensityChanged(double newIntensity);
 };
 
 }

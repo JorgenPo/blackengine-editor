@@ -103,3 +103,7 @@ bool RenderWindow::shouldClose()
 {
     return false;
 }
+
+Scene &RenderWindow::getScene() noexcept {
+  return scene;
+}

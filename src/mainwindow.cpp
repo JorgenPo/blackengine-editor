@@ -35,6 +35,9 @@ MainWindow::MainWindow(std::shared_ptr<RenderWindow> window)
     timerPtr->start();
 
     Logger::SetLogLevel(LogLevel::TRACE);
+
+    connect(ui->sbLightIntensity, SIGNAL(valueChanged(double)),
+        &renderWindow->getScene(), SLOT(onLightIntensityChanged(double)));
 }
 
 MainWindow::~MainWindow()
@@ -42,6 +45,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//void MainWindow::onLightIntensityChanged(double newIntensity) {
+//  Logger::Get("Editor")->trace("New intensity: {}", newIntensity);
+//}
 
 bool MainWindow::isKeyPressed(black::Key key)
 {

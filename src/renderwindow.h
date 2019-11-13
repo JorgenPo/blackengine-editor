@@ -41,13 +41,14 @@ public:
   float getRenderTargetAspectRatio() override;
 
   // AbstractRenderWindow interface
-public:
   void show() override;
   void hide() override;
   void close() override;
   bool isShown() override;
   void pollEvents() override;
   bool shouldClose() override;
+
+  Scene &getScene() noexcept;
 };
 
 }
