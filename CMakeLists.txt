@@ -27,6 +27,8 @@ add_executable(blackengine-editor
         src/renderwindow.cpp
         src/renderwindow.h
         src/mainwindow.ui
+        src/editor/Scene.h
+        src/editor/Scene.cpp
         libs/glad/src/glad.c
 )
 

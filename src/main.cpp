@@ -4,6 +4,8 @@
 #include <QApplication>
 #include <BlackEngine/SystemInterface.h>
 
+using namespace blackeditor;
+
 class Application : public black::SystemInterface, public QApplication {
     std::shared_ptr<MainWindow> mainWindow;
     std::shared_ptr<RenderWindow> renderWindow;

@@ -8,6 +8,7 @@
 #include <QTimer>
 
 using namespace black;
+using namespace blackeditor;
 
 MainWindow::MainWindow(std::shared_ptr<RenderWindow> window)
     : QMainWindow(nullptr)

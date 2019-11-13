@@ -12,45 +12,47 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+namespace blackeditor {
 class RenderWindow;
 
-class MainWindow : public QMainWindow, public black::AbstractApplication, public black::InputSystemInterface
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow, public black::AbstractApplication, public black::InputSystemInterface {
+Q_OBJECT
 
-    std::shared_ptr<RenderWindow> renderWindow;
-    std::shared_ptr<black::PerformanceCounter> timer;
+  std::shared_ptr<RenderWindow> renderWindow;
+  std::shared_ptr<black::PerformanceCounter> timer;
 
-    std::unique_ptr<QTimer> updateTimer;
-    Ui::MainWindow *ui;
+  std::unique_ptr<QTimer> updateTimer;
+  Ui::MainWindow *ui;
 
 public:
-    explicit MainWindow(std::shared_ptr<RenderWindow> renderWindow);
-    ~MainWindow() override;
+  explicit MainWindow(std::shared_ptr<RenderWindow> renderWindow);
+  ~MainWindow() override;
 
-    // InputSystemInterface interface
+  // InputSystemInterface interface
 public:
-    bool isKeyPressed(black::Key key) override;
-    bool isKeyPressed(int key) override;
-    bool isKeyReleased(black::Key key) override;
-    bool isKeyReleased(int key) override;
-    void setCursorMode(black::CursorMode mode) override;
-    void setMouseAccelerated(bool accelerated) override;
-    void addCursor(std::string name, const black::Image &image) override;
-    void setCursor(std::string name) override;
+  bool isKeyPressed(black::Key key) override;
+  bool isKeyPressed(int key) override;
+  bool isKeyReleased(black::Key key) override;
+  bool isKeyReleased(int key) override;
+  void setCursorMode(black::CursorMode mode) override;
+  void setMouseAccelerated(bool accelerated) override;
+  void addCursor(std::string name, const black::Image &image) override;
+  void setCursor(std::string name) override;
 
 
-    // AbstractApplication interface
+  // AbstractApplication interface
 protected:
-    void update(float dt) override;
-    void init() override;
+  void update(float dt) override;
+  void init() override;
 
 private:
-    void initializeResources() override;
-    void run() override;
+  void initializeResources() override;
+  void run() override;
 
 public slots:
-    void onUpdateTime();
+  void onUpdateTime();
 };
+
+}
 
 #endif // MAINWINDOW_H

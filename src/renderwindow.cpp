@@ -13,12 +13,12 @@
 #include <BlackEngine/util/Screen.h>
 
 using namespace black;
+using namespace blackeditor;
 
-RenderWindow::RenderWindow(QWidget *parent)
-    : QOpenGLWidget(parent)
+RenderWindow::RenderWindow(QWidget *parent) :
+    QOpenGLWidget(parent)
     , AbstractRenderWindow(
           black::WindowData{"BlackEngine", this->width(), this->height(), false, {4, 4}})
-    , scene(std::make_shared<SimpleScene>("Scene"))
 {
     QSurfaceFormat contextInfo;
     contextInfo.setVersion(4, 0);
@@ -36,7 +36,7 @@ void RenderWindow::initializeGL()
         Logger::Get("RenderWindow")->critical("Failed to init opengl functions");
     }
 
-    initScene();
+    scene.initialize();
 }
 
 void RenderWindow::resizeGL(int w, int h)
@@ -46,7 +46,7 @@ void RenderWindow::resizeGL(int w, int h)
 
 void RenderWindow::paintGL()
 {
-    renderer->render(scene);
+    renderer->render(scene.get());
 }
 
 
@@ -102,23 +102,4 @@ void RenderWindow::pollEvents()
 bool RenderWindow::shouldClose()
 {
     return false;
-}
-
-void RenderWindow::initScene()
-{
-    auto cottageModel = ModelManager::CreateFromFile("resources/cottage_obj.obj");
-    auto cottage = std::make_shared<GameObject>("Cottage");
-
-    cottage->add(cottageModel);
-    cottage->add(std::make_shared<BoundingComponent>(
-                     std::make_shared<Sphere>(cottage->transform, 12.0f)));
-    cottage->transform->scale(0.1f);
-
-    scene->addObject(std::move(cottage));
-
-    this->camera = std::make_shared<Camera>(ProjectionType::PERSPECTIVE);
-    this->camera->setPosition({0.0f, 10.0f, 1.0f});
-    this->camera->setLookAt({0.0f, -1.0f, 0.0f});
-
-    scene->setCurrentCamera(this->camera);
 }
