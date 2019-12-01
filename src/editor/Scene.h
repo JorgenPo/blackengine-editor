@@ -7,6 +7,7 @@
 
 #include <BlackEngine/scene/SimpleScene.h>
 #include <BlackEngine/terrain/Terrain.h>
+#include <BlackEngine/render/RenderTargetInterface.h>
 
 #include <QObject>
 
@@ -22,17 +23,21 @@ class Scene : public QObject {
   std::shared_ptr<black::Camera> camera;
   std::shared_ptr<black::Terrain> terrain;
   std::shared_ptr<black::GameObject> mainLight;
+  std::shared_ptr<black::RenderTargetInterface> renderTarget;
 
   using BlackScene = std::shared_ptr<black::SimpleScene>;
 
 public:
-  Scene();
+  Scene(std::shared_ptr<black::RenderTargetInterface> renderTarget);
 
   void initialize();
   [[nodiscard]] BlackScene get() const noexcept;
 
 public slots:
   void onLightIntensityChanged(double newIntensity);
+  void onAmbientIntensityChanged(double newIntensity);
+  void setLightEnabled(int state);
+  void updateCameraViewport(int w, int h);
 };
 
 }

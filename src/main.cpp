@@ -43,6 +43,5 @@ int main(int argc, char *argv[])
     black::Engine::RegisterSystemInterface(app);
 
     app->start();
-
     return app->exec();
 }

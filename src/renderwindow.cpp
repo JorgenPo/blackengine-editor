@@ -10,15 +10,16 @@
 #include <BlackEngine/components/TransformComponent.h>
 #include <BlackEngine/components/ModelComponent.h>
 #include <BlackEngine/Camera.h>
-#include <BlackEngine/util/Screen.h>
 
 using namespace black;
 using namespace blackeditor;
 
 RenderWindow::RenderWindow(QWidget *parent) :
     QOpenGLWidget(parent)
-    , AbstractRenderWindow(
-          black::WindowData{"BlackEngine", this->width(), this->height(), false, {4, 4}})
+    , AbstractRenderWindow(black::WindowData{
+      "BlackEngine",this->width(), this->height(),
+      false, {4, 4}})
+    , scene(nullptr)
 {
     QSurfaceFormat contextInfo;
     contextInfo.setVersion(4, 0);
@@ -31,22 +32,23 @@ void RenderWindow::initializeGL()
     // Init GLAD
     if (gladLoadGL()) {
         renderer = Engine::GetCurrentRenderSystem()->createRenderer(shared_from_this());
-        Screen::Initialize(renderer);
     } else {
         Logger::Get("RenderWindow")->critical("Failed to init opengl functions");
     }
 
-    scene.initialize();
+    scene = std::make_shared<Scene>(shared_from_this());
+    scene->initialize();
 }
 
 void RenderWindow::resizeGL(int w, int h)
 {
-
+  renderer->setViewPort(0, 0, w, h);
+  scene->updateCameraViewport(w, h);
 }
 
 void RenderWindow::paintGL()
 {
-    renderer->render(scene.get());
+    renderer->render(scene->get());
 }
 
 
@@ -72,7 +74,7 @@ float RenderWindow::getRenderTargetHeight()
 
 float RenderWindow::getRenderTargetAspectRatio()
 {
-    return this->width() / this->height();
+    return (float)this->width() / (float)this->height();
 }
 
 void RenderWindow::show()
@@ -104,6 +106,6 @@ bool RenderWindow::shouldClose()
     return false;
 }
 
-Scene &RenderWindow::getScene() noexcept {
+std::shared_ptr<Scene> RenderWindow::getScene() const noexcept {
   return scene;
 }

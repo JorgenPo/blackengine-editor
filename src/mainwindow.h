@@ -38,8 +38,9 @@ public:
   void setMouseAccelerated(bool accelerated) override;
   void addCursor(std::string name, const black::Image &image) override;
   void setCursor(std::string name) override;
-
-
+  float getMouseX() const noexcept override;
+  float getMouseY() const noexcept override;
+  void onEvent(const MouseButtonEvent &event) override;
   // AbstractApplication interface
 protected:
   void update(float dt) override;

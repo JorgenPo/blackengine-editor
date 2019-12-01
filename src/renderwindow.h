@@ -21,7 +21,7 @@ class RenderWindow :
 
   std::shared_ptr<black::RendererInterface> renderer;
 
-  Scene scene;
+  std::shared_ptr<Scene> scene;
 
 public:
   explicit RenderWindow(QWidget *parent);
@@ -48,7 +48,8 @@ public:
   void pollEvents() override;
   bool shouldClose() override;
 
-  Scene &getScene() noexcept;
+
+  std::shared_ptr<Scene> getScene() const noexcept;
 };
 
 }

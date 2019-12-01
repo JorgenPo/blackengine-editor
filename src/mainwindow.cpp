@@ -26,6 +26,9 @@ MainWindow::MainWindow(std::shared_ptr<RenderWindow> window)
     sizePolicy.setHeightForWidth(renderWindow->sizePolicy().hasHeightForWidth());
     renderWindow->setSizePolicy(sizePolicy);
 
+//    ui->gridLayout->setColumnStretch(0, 2);
+//    ui->gridLayout->setColumnStretch(1, 1);
+
     ui->gridLayout->removeItem(ui->verticalSpacer);
     ui->gridLayout->addWidget(renderWindow.get(), 0, 0);
 
@@ -36,8 +39,17 @@ MainWindow::MainWindow(std::shared_ptr<RenderWindow> window)
 
     Logger::SetLogLevel(LogLevel::TRACE);
 
-    connect(ui->sbLightIntensity, SIGNAL(valueChanged(double)),
-        &renderWindow->getScene(), SLOT(onLightIntensityChanged(double)));
+    connect(ui->hsLightIntensity, &QSlider::valueChanged,this,[=](int value) {
+      renderWindow->getScene()->onLightIntensityChanged(static_cast<float>(value) / 100);
+    });
+
+    connect(ui->hsAmbientIntensity,  &QSlider::valueChanged, this, [=](int value) {
+      renderWindow->getScene()->onAmbientIntensityChanged(static_cast<float>(value) / 100);
+    });
+
+    connect(ui->cbDisableLight, &QCheckBox::clicked, this, [=]() {
+      renderWindow->getScene()->setLightEnabled(!ui->cbDisableLight->checkState());
+    });
 }
 
 MainWindow::~MainWindow()
@@ -105,6 +117,17 @@ void MainWindow::run()
 
 void MainWindow::onUpdateTime()
 {
-//    Logger::Get("MainWindow")->info("Update");
     renderWindow->updateRenderTarget();
+}
+
+float MainWindow::getMouseX() const noexcept {
+  return 0;
+}
+
+float MainWindow::getMouseY() const noexcept {
+  return 0;
+}
+
+void MainWindow::onEvent(const MouseButtonEvent &event) {
+
 }
